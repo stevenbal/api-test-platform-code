@@ -34,13 +34,7 @@ def get_jwt(session):
 
     return ClientAuth(
         client_id=session.client_id,
-        secret=session.secret,
-        scopes=['zds.scopes.zaken.lezen',
-                'zds.scopes.zaaktypes.lezen',
-                'zds.scopes.zaken.aanmaken',
-                'zds.scopes.statussen.toevoegen',
-                'zds.scopes.zaken.bijwerken'],
-        zaaktypes=['*']
+        secret=session.secret
     )
 
 
