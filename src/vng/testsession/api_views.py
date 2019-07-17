@@ -4,7 +4,6 @@ import logging
 import requests
 
 from urllib import parse
-from zds_client import ClientAuth
 from subdomains.utils import reverse as reverse_sub
 from django.shortcuts import get_object_or_404
 from django.views import View
@@ -25,7 +24,7 @@ from .models import (
 )
 
 from ..utils import choices
-from ..utils.views import CSRFExemptMixin
+from ..utils.views import CSRFExemptMixin, get_jwt
 
 from .permission import IsOwner
 from .serializers import (
@@ -36,20 +35,6 @@ from .views import bootstrap_session
 from .task import run_tests, stop_session
 
 logger = logging.getLogger(__name__)
-
-
-def get_jwt(session):
-
-    return ClientAuth(
-        client_id=session.client_id,
-        secret=session.secret,
-        scopes=['zds.scopes.zaken.lezen',
-                'zds.scopes.zaaktypes.lezen',
-                'zds.scopes.zaken.aanmaken',
-                'zds.scopes.statussen.toevoegen',
-                'zds.scopes.zaken.bijwerken'],
-        zaaktypes=['*']
-    )
 
 
 class SessionViewStatusSet(

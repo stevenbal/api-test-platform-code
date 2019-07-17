@@ -1,5 +1,6 @@
 import functools
 from collections.abc import Iterable
+from zds_client import ClientAuth
 
 from weasyprint import HTML
 
@@ -27,6 +28,20 @@ def rgetattr(obj, attr, *args):
     def _getattr(obj, attr):
         return getattr(obj, attr, *args)
     return functools.reduce(_getattr, [obj] + attr.split('.'))
+
+
+def get_jwt(session):
+
+    return ClientAuth(
+        client_id=session.client_id,
+        secret=session.secret,
+        scopes=['zds.scopes.zaken.lezen',
+                'zds.scopes.zaaktypes.lezen',
+                'zds.scopes.zaken.aanmaken',
+                'zds.scopes.statussen.toevoegen',
+                'zds.scopes.zaken.bijwerken'],
+        zaaktypes=['*']
+    )
 
 
 @requires_csrf_token
